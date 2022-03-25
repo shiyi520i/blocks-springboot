@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiyi.mybatis_plus.mapper.BusRecruitinfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shiyi.mybatis_plus.pojo.BusRecruitinfo">
+        <id column="r_id" property="rId" />
+        <result column="e_id" property="eId" />
+        <result column="r_post" property="rPost" />
+        <result column="r_jdescript" property="rJdescript" />
+        <result column="r_jaddress" property="rJaddress" />
+        <result column="r_jexperience" property="rJexperience" />
+        <result column="r_erequirement" property="rErequirement" />
+        <result column="r_jduty" property="rJduty" />
+        <result column="r_jrequirement" property="rJrequirement" />
+        <result column="r_number" property="rNumber" />
+        <result column="r_minsalary" property="rMinsalary" />
+        <result column="r_status" property="rStatus" />
+        <result column="r_time" property="rTime" />
+        <result column="r_worktype" property="rWorktype" />
+        <result column="r_welfare" property="rWelfare" />
+        <result column="r_ischeck" property="rIscheck" />
+        <result column="r_stats" property="rStats" />
+        <result column="r_age" property="rAge" />
+        <result column="r_starttime" property="rStarttime" />
+        <result column="r_endtime" property="rEndtime" />
+        <result column="r_maxsalary" property="rMaxsalary" />
+        <result column="r_province" property="rProvince" />
+        <result column="r_city" property="rCity" />
+        <result column="r_area" property="rArea" />
+        <result column="r_ztype" property="rZtype" />
+        <result column="r_welfares" property="rWelfares" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        r_id, e_id, r_post, r_jdescript, r_jaddress, r_jexperience, r_erequirement, r_jduty, r_jrequirement, r_number, r_minsalary, r_status, r_time, r_worktype, r_welfare, r_ischeck, r_stats, r_age, r_starttime, r_endtime, r_maxsalary, r_province, r_city, r_area, r_ztype, r_welfares
+    </sql>
+
+    <select id="findAllByEId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_bus_recruitinfo
+        where
+        e_id = #{eId,jdbcType=NUMERIC}
+    </select>
+    <select id="findByEId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_bus_recruitinfo
+        where
+        e_id = #{eId,jdbcType=NUMERIC}
+    </select>
+    <select id="findByRId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_bus_recruitinfo
+        where
+        r_id = #{rId,jdbcType=NUMERIC}
+    </select>
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiyi.mybatis_plus.mapper.CompanyinfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shiyi.mybatis_plus.pojo.Companyinfo">
+        <id column="id" property="id" />
+        <result column="companyname" property="companyname" />
+        <result column="type" property="type" />
+        <result column="number" property="number" />
+        <result column="landline" property="landline" />
+        <result column="email" property="email" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="area" property="area" />
+        <result column="address" property="address" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, companyname, `type`, `number`, landline, email, province, city, area, address
+    </sql>
+    <select id="getAllById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_bus_companyinfo
+        where
+        id = #{id,jdbcType=NUMERIC}
+    </select>
+    <select id="getById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_bus_companyinfo
+        where
+        id = #{id,jdbcType=NUMERIC}
+    </select>
+
+</mapper>
