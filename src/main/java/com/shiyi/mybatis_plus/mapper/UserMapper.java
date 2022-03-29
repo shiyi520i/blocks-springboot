@@ -1,10 +1,11 @@
 package com.shiyi.mybatis_plus.mapper;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 import com.shiyi.mybatis_plus.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.reactivestreams.Publisher;
+import reactor.core.publisher.Flux;
 
 /**
  * <p>
@@ -12,10 +13,12 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author ShiYi
- * @since 2021-11-04
+ * @since 2022-03-29
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    List<User> getByUsername(@Param("username") String username);
+
+
+     Flux<User> insertAll(@Param("id") Publisher<User> entityStream);
 
 }

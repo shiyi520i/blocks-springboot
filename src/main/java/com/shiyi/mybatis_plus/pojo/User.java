@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,35 +16,42 @@ import lombok.Setter;
  * </p>
  *
  * @author ShiYi
- * @since 2021-11-04
+ * @since 2022-03-29
  */
-@Builder
 @Getter
-@TableName("t_user")
+@Setter
+@TableName("t_sys_user")
 @ApiModel(value = "User对象", description = "")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("用户id")
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private Integer id;
+
+    @ApiModelProperty("登录id")
+    @TableField("login_id")
+    private Integer loginId;
 
     @ApiModelProperty("用户名")
     @TableField("username")
     private String username;
 
-    @ApiModelProperty("用户密码")
-    @TableField("`password`")
-    private String password;
+    @ApiModelProperty("邮箱")
+    @TableField("email")
+    private String email;
 
-    @ApiModelProperty("用户姓名")
-    @TableField("fullname")
-    private String fullname;
+    @ApiModelProperty("年龄")
+    @TableField("age")
+    private Integer age;
 
-    @ApiModelProperty("手机号")
-    @TableField("mobile")
-    private String mobile;
+    @ApiModelProperty("地址")
+    @TableField("address")
+    private String address;
+
+    @ApiModelProperty("电话")
+    @TableField("phone")
+    private String phone;
 
 
 }

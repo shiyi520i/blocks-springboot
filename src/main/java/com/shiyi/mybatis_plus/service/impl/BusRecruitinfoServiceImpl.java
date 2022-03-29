@@ -66,7 +66,7 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
             w = 1;
         List<Integer> s = SUtil.sToM(salary);
         Page<BusRecruitinfo> page = new Page<>();
-        page.setCurrent(1).setSize(5);
+        page.setCurrent(pageNo).setSize(pageSize);
         QueryWrapper<BusRecruitinfo> q = new QueryWrapper<>();
         q.like("r_post",keyword).like("r_ztype",jobtype).ge("r_minsalary",s.get(0)).le("r_maxsalary",s.get(1)).eq("r_worktype",w);
         Page<BusRecruitinfo> b = busRecruitinfoService.selectPageRec(page, q);
@@ -108,33 +108,4 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
 
 
     }
-
-
-/**
- *  获取一条职位信息
- *  记录被浏览
- * @author ShiYi
- * @return void
- * @date 2021/12/9 11:55
- *//*
-
-    public void postOne() {
-        LoginModel lm = getMemberSession();
-        Integer eid = getParaToInt("id");
-        Recruitinfo id = Recruitinfo.dao.getByid(eid);
-
-        if (lm != null&&lm.getRoleType()==1) {
-            Searched searched = new Searched();
-            searched.set("e_id", eid);
-            searched.set("type", 2);
-            searched.set("post", id.get("r_post"));
-            searched.set("u_id", lm.getUserId());
-            searched.save();
-        }
-
-
-        renderJson(id);
-    }
-
-    */
 }
