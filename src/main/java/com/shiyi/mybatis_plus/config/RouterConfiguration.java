@@ -21,7 +21,7 @@ public class RouterConfiguration {
         return RouterFunctions.nest(RequestPredicates.path("/user"),
                 RouterFunctions.route(RequestPredicates.GET("/a"), userService::getAllUsers)
                         //.andRoute(RequestPredicates.POST("/{id}"), userService::updataUser)
-                        .andRoute(RequestPredicates.POST("/b"), userService::addUser)
+                        .andRoute(RequestPredicates.POST("/adduser"), userService::addUser)
                         .andRoute(RequestPredicates.DELETE("/c/{id}"), userService::deleteUser));
     }
 }

@@ -26,12 +26,10 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
 
     @ApiModelProperty("登录id")
-    @TableField("login_id")
-    private Integer loginId;
+    @TableId("login_id")
+    private String loginId;
 
     @ApiModelProperty("用户名")
     @TableField("username")

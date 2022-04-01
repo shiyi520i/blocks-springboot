@@ -1,6 +1,5 @@
 package com.shiyi.mybatis_plus.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.mybatis_plus.pojo.User;
 import com.shiyi.mybatis_plus.mapper.UserMapper;
@@ -8,7 +7,6 @@ import com.shiyi.mybatis_plus.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -45,7 +43,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     public Mono<ServerResponse> addUser(ServerRequest serverRequest) {
         return ok().contentType(APPLICATION_JSON)
-                .body(serverRequest.bodyToMono(User.class).flatMap(x->{userService.save(x);return Mono.just(x);}),User.class);
+                .body(serverRequest.bodyToMono(User.class).flatMap(x -> {
+                    userService.getOneByLoginId(x.getLoginId())
+                            .switchIfEmpty(Mono.just(userService.saveOrUpdate(x)));
+                    return Mono.empty();
+                }), User.class);
     }
 
 
@@ -53,12 +55,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return Mono.just(userMapper.selectById(parseLong(serverRequest.pathVariable("id"))))
                 .flatMap(user -> Mono.just(userMapper.updateById(user)).then(ok().build()))
                 .switchIfEmpty(notFound().build());
-                //.switchIfEmpty(userService.save());
     }
 
     public Mono<ServerResponse> deleteUser(ServerRequest serverRequest) {
         return Mono.just(userMapper.selectById(parseLong(serverRequest.pathVariable("id"))))
                 .flatMap(user -> Mono.just(userMapper.deleteById(user)).then(ok().build()))
                 .switchIfEmpty(notFound().build());
+    }
+
+    public Mono<Object> getOneByLoginId(String id) {
+        return userMapper.getOneByLoginId(id) == null ? Mono.empty() : Mono.just(true);
     }
 }

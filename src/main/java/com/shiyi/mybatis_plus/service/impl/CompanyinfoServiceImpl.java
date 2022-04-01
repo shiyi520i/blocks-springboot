@@ -1,5 +1,6 @@
 package com.shiyi.mybatis_plus.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.mybatis_plus.pojo.Companyinfo;
 import com.shiyi.mybatis_plus.mapper.CompanyinfoMapper;
 import com.shiyi.mybatis_plus.pojo.Weight;
@@ -7,16 +8,10 @@ import com.shiyi.mybatis_plus.service.ICompanyinfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 import static java.lang.Long.parseLong;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 /**
  * <p>
@@ -33,11 +28,14 @@ public class CompanyinfoServiceImpl extends ServiceImpl<CompanyinfoMapper, Compa
     CompanyinfoMapper companyinfoMapper;
     @Autowired
     WeightServiceImpl weightService;
+    @Autowired
+    CompanyinfoServiceImpl companyinfoService;
 
     @Override
     public List<Companyinfo> getById(Integer id) {
         return companyinfoMapper.getById(id);
     }
+
 
     @Override
     public Companyinfo getComOne(Integer id){
@@ -47,6 +45,10 @@ public class CompanyinfoServiceImpl extends ServiceImpl<CompanyinfoMapper, Compa
         weight.setWeight(weight.getWeight()+1);
         weightService.saveOrUpdate(weight);
         return b;
+    }
+
+    public Page<Companyinfo> getAllCom(Integer pageNo,Integer pageSize){
+        return companyinfoService.page(new Page<Companyinfo>().setCurrent(pageNo).setSize(pageSize));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.shiyi.mybatis_plus.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.mybatis_plus.pojo.Companyinfo;
 import com.shiyi.mybatis_plus.service.impl.CompanyinfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ public class CompanyinfoController {
     @RequestMapping(value = "/getcomone", method = RequestMethod.POST)
     public Mono<Companyinfo> getComOne(@RequestParam("id") Integer id) {
         return Mono.just(companyinfoService.getComOne(id));
+    }
+
+    @RequestMapping(value = "/getallcom", method = RequestMethod.GET)
+    public Mono<Page<Companyinfo>> getAllCom(@RequestParam("pageNo") Integer pageNo,
+                                             @RequestParam("pageSize") Integer pageSize) {
+        return Mono.just(companyinfoService.getAllCom(pageNo,pageSize));
     }
 
 }

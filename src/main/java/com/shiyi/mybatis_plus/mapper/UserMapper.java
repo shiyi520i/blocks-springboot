@@ -4,8 +4,6 @@ import com.shiyi.mybatis_plus.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.reactivestreams.Publisher;
-import reactor.core.publisher.Flux;
 
 /**
  * <p>
@@ -18,7 +16,6 @@ import reactor.core.publisher.Flux;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-
-     Flux<User> insertAll(@Param("id") Publisher<User> entityStream);
+     User getOneByLoginId(@Param("loginId") String loginId);
 
 }
