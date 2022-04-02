@@ -1,5 +1,7 @@
 package com.shiyi.mybatis_plus.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.mybatis_plus.common.Result;
 import com.shiyi.mybatis_plus.pojo.Record;
 import com.shiyi.mybatis_plus.mapper.RecordMapper;
@@ -7,6 +9,7 @@ import com.shiyi.mybatis_plus.service.IRecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 /**
  * <p>
@@ -36,6 +39,13 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         }
         return result;
 
+    }
+
+    public Mono<Page<Record>> getRecordsPage(Integer pageNo, Integer pageSize, String uid, Integer type){
+       return Mono.just(recordService.page(new Page<Record>()
+                        .setCurrent(pageNo).setSize(pageSize),
+                new QueryWrapper<Record>()
+                        .eq("uid",uid).eq("type",type)));
     }
 
 }

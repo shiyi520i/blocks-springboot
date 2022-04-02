@@ -20,7 +20,7 @@ public class RouterConfiguration {
     RouterFunction<ServerResponse> userRouterFunction(UserServiceImpl userService) {
         return RouterFunctions.nest(RequestPredicates.path("/user"),
                 RouterFunctions.route(RequestPredicates.GET("/a"), userService::getAllUsers)
-                        //.andRoute(RequestPredicates.POST("/{id}"), userService::updataUser)
+                        .andRoute(RequestPredicates.POST("/updatauser/{id}"), userService::updataUser)
                         .andRoute(RequestPredicates.POST("/adduser"), userService::addUser)
                         .andRoute(RequestPredicates.DELETE("/c/{id}"), userService::deleteUser));
     }

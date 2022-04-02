@@ -1,5 +1,6 @@
 package com.shiyi.mybatis_plus.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -50,6 +51,22 @@ public class User implements Serializable {
     @ApiModelProperty("电话")
     @TableField("phone")
     private String phone;
+
+    @ApiModelProperty("简历地址")
+    @TableField("cvurl")
+    private String cvurl;
+
+    @ApiModelProperty("毕业时间")
+    @TableField("grtime")
+    private String grtime;
+
+    @ApiModelProperty("毕业学校")
+    @TableField("graduate")
+    private String graduate;
+
+    @ApiModelProperty("期望职位")
+    @TableField("postition")
+    private String postition;
 
 
 }
