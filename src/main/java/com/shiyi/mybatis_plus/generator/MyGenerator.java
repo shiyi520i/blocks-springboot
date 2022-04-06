@@ -44,7 +44,7 @@ public class MyGenerator {
                             .pathInfo(Collections.singletonMap(OutputFile.mapperXml, System.getProperty("user.dir")+"/src/main/resources/mapper"));
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("t_sys_user") // 设置需要生成的表名
+                    builder.addInclude("t_bus_news") // 设置需要生成的表名
                             .addTablePrefix("t_bus", "t_sys") // 设置过滤表前缀
                             .entityBuilder() //实体类配置
                             .enableLombok()
