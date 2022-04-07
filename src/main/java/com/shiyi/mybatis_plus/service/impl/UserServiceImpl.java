@@ -53,8 +53,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     public Mono<ServerResponse> updataUser(ServerRequest serverRequest) {
         return Mono.just(userMapper.selectById(serverRequest.pathVariable("id")))
-                .flatMap(user ->
-                    Mono.just(userMapper.updateById(user)).then(ok().build()))
+                .flatMap(user -> Mono.just(userMapper.updateById(user)).then(ok().build()))
                 .switchIfEmpty(notFound().build());
     }
 

@@ -1,6 +1,7 @@
 package com.shiyi.mybatis_plus.config;
 
 
+import com.shiyi.mybatis_plus.common.CosUpload;
 import com.shiyi.mybatis_plus.service.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,5 +24,11 @@ public class RouterConfiguration {
                         .andRoute(RequestPredicates.POST("/updatauser/{id}"), userService::updataUser)
                         .andRoute(RequestPredicates.POST("/adduser"), userService::addUser)
                         .andRoute(RequestPredicates.DELETE("/c/{id}"), userService::deleteUser));
+    }
+
+    @Bean
+    RouterFunction<ServerResponse> uploadRouterFunction(CosUpload cosUpload) {
+        return RouterFunctions.nest(RequestPredicates.path("/user"),
+                RouterFunctions.route(RequestPredicates.POST("/upload"), cosUpload::cosUpload));
     }
 }
