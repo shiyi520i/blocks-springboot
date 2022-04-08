@@ -35,7 +35,7 @@ public class FileService {
     @Autowired
     private CosProperties cosProperties;
 
-    public Mono<String> cosUpload(Mono<FilePart> file) throws IOException {
+    public Mono<String> cosUpload(Mono<FilePart> file,String key) throws IOException {
         return file.map(filePart -> {
             Path tempFile = null;
             try {
@@ -53,12 +53,12 @@ public class FileService {
                 System.out.println("finish");
             }).subscribe();
             return tempFile;
-        }).map(Path::toFile).flatMap(f -> fileService.cosUpload(f));
+        }).map(Path::toFile).flatMap(f -> fileService.cosUpload(f,key));
     }
 
 
-    public Mono<String> cosUpload(File file) {
-        String key = "images/";
+    public Mono<String> cosUpload(File file,String key) {
+        //String key = "images/";
         COSCredentials cred = new BasicCOSCredentials(cosProperties.getSecretId(), cosProperties.getSecretKey());
         // clientConfig 中包含了设置 region, https(默认 http), 超时, 代理等 set 方法, 使用可参见源码或者常见问题 Java SDK 部分。
         ClientConfig clientConfig = new ClientConfig(new Region(cosProperties.getRegion()));

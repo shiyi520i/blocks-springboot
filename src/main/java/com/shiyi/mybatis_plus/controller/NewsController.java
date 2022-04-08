@@ -2,26 +2,15 @@ package com.shiyi.mybatis_plus.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.shiyi.mybatis_plus.common.CosUpload;
 import com.shiyi.mybatis_plus.pojo.News;
 import com.shiyi.mybatis_plus.service.impl.FileService;
 import com.shiyi.mybatis_plus.service.impl.NewsServiceImpl;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.channels.AsynchronousFileChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 /**
  * <p>
@@ -41,10 +30,7 @@ public class NewsController {
     private FileService fileService;
 
 
-    @Autowired
-    private CosUpload cosUpload;
-
-    @RequestMapping(value = "saveNews", method = RequestMethod.POST)
+    @RequestMapping(value = "savenews", method = RequestMethod.POST)
     public Mono<String> saveNews(@RequestBody News news) {
         return newsService.saveNews(news);
     }
@@ -68,11 +54,8 @@ public class NewsController {
     @SneakyThrows
     @RequestMapping(value = "u", method = RequestMethod.POST)
     public Mono<String> single(@RequestPart("file") Mono<FilePart> file) {
-        return fileService.cosUpload(file);
-
+        return fileService.cosUpload(file,"imges");
     }
-
-
 
 }
 

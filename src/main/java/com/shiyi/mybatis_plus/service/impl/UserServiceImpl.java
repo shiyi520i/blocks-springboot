@@ -66,4 +66,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Mono<Object> getOneByLoginId(String id) {
         return userMapper.getOneByLoginId(id) == null ? Mono.empty() : Mono.just(true);
     }
+
+
 }

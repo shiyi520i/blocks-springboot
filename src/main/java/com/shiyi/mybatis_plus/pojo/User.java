@@ -68,5 +68,8 @@ public class User implements Serializable {
     @TableField("postition")
     private String postition;
 
+    @ApiModelProperty("头像地址")
+    @TableField("avatar")
+    private String avatar;
 
 }
