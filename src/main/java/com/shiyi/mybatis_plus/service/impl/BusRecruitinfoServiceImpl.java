@@ -72,7 +72,8 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
         Page<BusRecruitinfo> b = busRecruitinfoService.selectPageRec(page, q);
          b.getRecords().stream().map(x -> {
 
-            Companyinfo c = companyinfoService.getById(x.getEId()).get(0);
+            //Companyinfo c = companyinfoService.getById(x.getEId()).get(0);
+            Companyinfo c = companyinfoService.getById(x.getEId());
             //设置时间
             DateTime date = DateUtil.date(Calendar.getInstance());
             DateTime dateTime = DateUtil.offsetDay(date, -1);
@@ -103,9 +104,12 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
             r.setUid(uid).setPost(postname).setCid(cid).setType(3);
             recordService.save(r);
         }
-
         return busRecruitinfoService.findByRId(id);
+    }
 
 
+    public boolean savePost(BusRecruitinfo busRecruitinfo){
+
+        return busRecruitinfoService.saveOrUpdate(busRecruitinfo);
     }
 }

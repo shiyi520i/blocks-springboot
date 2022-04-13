@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiyi.mybatis_plus.mapper.NewsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shiyi.mybatis_plus.pojo.News">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="authorid" property="authorid" />
+        <result column="content" property="content" />
+        <result column="greatnum" property="greatnum" />
+        <result column="scannum" property="scannum" />
+        <result column="summary" property="summary" />
+        <result column="author" property="author" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, authorid, content, greatnum, scannum, summary, author
+    </sql>
+
+</mapper>

@@ -64,6 +64,19 @@ public class BusRecruitinfoController {
         return busRecruitinfoService.postOne(rd.getId(), null, rd.getUid(), null);
     }
 
+    /**
+     *  保存或更新职位信息
+     * @author ShiYi
+     * @param busRecruitinfo 职位实体
+     * @return boolean
+     * @date 2022/4/13 15:35
+     */
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public boolean savePost(@RequestBody BusRecruitinfo busRecruitinfo) {
+
+        return busRecruitinfoService.savePost(busRecruitinfo);
+    }
+
 
 }
 

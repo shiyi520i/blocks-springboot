@@ -32,7 +32,7 @@ public class BusRecruitinfo implements Serializable {
 
     @ApiModelProperty("企业信息表id  外键")
     @TableField("e_id")
-    private Integer eId;
+    private String eId;
 
     @ApiModelProperty("岗位名称")
     @TableField("r_post")

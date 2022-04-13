@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shiyi.mybatis_plus.mapper.ApplylistMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shiyi.mybatis_plus.pojo.Applylist">
+        <id column="id" property="id" />
+        <result column="unitname" property="unitname" />
+        <result column="address" property="address" />
+        <result column="license" property="license" />
+        <result column="represent" property="represent" />
+        <result column="representphone" property="representphone" />
+        <result column="number" property="number" />
+        <result column="frontimg" property="frontimg" />
+        <result column="backimg" property="backimg" />
+        <result column="handimg" property="handimg" />
+        <result column="phone" property="phone" />
+        <result column="time" property="time" />
+        <result column="type" property="type" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, unitname, address, license, represent, representphone, `number`, frontimg, backimg, handimg, phone, `time`, `type`
+    </sql>
+
+</mapper>
