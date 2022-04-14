@@ -25,7 +25,7 @@ public class Companyinfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("id")
+    @TableId("login_id")
     private Integer id;
 
     @ApiModelProperty("公司名称")

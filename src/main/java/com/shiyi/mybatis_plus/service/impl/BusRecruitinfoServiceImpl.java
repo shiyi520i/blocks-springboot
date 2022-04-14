@@ -40,6 +40,8 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
     BusRecruitinfoServiceImpl busRecruitinfoService;
     @Autowired
     RecordServiceImpl recordService;
+    @Autowired
+    private ParameterServiceImpl parameterService;
 
     @Override
     public Page<BusRecruitinfo> selectPageRec(Page page, QueryWrapper q){
@@ -60,10 +62,7 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
     @Override
     public IPage<BusRecruitinfo> selectPage(String keyword,Integer pageNo,Integer pageSize,String time,String worktype,String salary,String jobtype) {
         Integer w=0;
-        if ("全职".equals(worktype))
-            w = 0;
-        if ("兼职".equals(worktype))
-            w = 1;
+       if("兼职".equals(worktype) )  w = 1;
         List<Integer> s = SUtil.sToM(salary);
         Page<BusRecruitinfo> page = new Page<>();
         page.setCurrent(pageNo).setSize(pageSize);
@@ -72,7 +71,6 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
         Page<BusRecruitinfo> b = busRecruitinfoService.selectPageRec(page, q);
          b.getRecords().stream().map(x -> {
 
-            //Companyinfo c = companyinfoService.getById(x.getEId()).get(0);
             Companyinfo c = companyinfoService.getById(x.getEId());
             //设置时间
             DateTime date = DateUtil.date(Calendar.getInstance());
@@ -86,11 +84,15 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
             //设置公司名称
             x.setRname(c.getCompanyname());
             //显示公司logo
-            x.setRlogo("http://localhost:86/rlzygl/" + c.getLogo());
-            // x.put("r_logo", "logo.png");
-            x.setRold(x.getRJexperience());
+            x.setRlogo(c.getLogo());
             //实现高亮
-            x.setRPost(x.getRPost().replace(keyword, "<span style=\"color:red;\">" + keyword + "</span>"));
+            x.setPost(x.getRPost().replace(keyword, "<span style=\"color:red;\">" + keyword + "</span>"));
+            //转工作年龄要求
+            x.setJexperience(parameterService.getById(x.getRJexperience()).getName());
+            //转学历要求
+            x.setErequirement(parameterService.getById(x.getRErequirement()).getName());
+            //显示类型
+            x.setType(parameterService.getById(c.getType()).getName());
             return x;
         }).collect(Collectors.toList());
 

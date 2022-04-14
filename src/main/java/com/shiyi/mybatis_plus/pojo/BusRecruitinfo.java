@@ -48,11 +48,11 @@ public class BusRecruitinfo implements Serializable {
 
     @ApiModelProperty("范围（几年到几年或）")
     @TableField("r_jexperience")
-    private String rJexperience;
+    private Integer rJexperience;
 
     @ApiModelProperty("学历要求")
     @TableField("r_erequirement")
-    private String rErequirement;
+    private Integer rErequirement;
 
     @ApiModelProperty("工作职责")
     @TableField("r_jduty")
@@ -127,17 +127,32 @@ public class BusRecruitinfo implements Serializable {
     @TableField("r_welfares")
     private String rWelfares;
 
+    @ApiModelProperty("公司名称")
     @TableField(exist = false)
     private String rname;
 
+    @ApiModelProperty("工作logo")
     @TableField(exist = false)
     private String rlogo;
 
+    @ApiModelProperty("公司类型")
     @TableField(exist = false)
-    private String rold;
+    private String type;
 
+    @ApiModelProperty("工作福利")
     @TableField(exist = false)
     private String[] welfares;
 
+    @ApiModelProperty("工作年龄")
+    @TableField(exist = false)
+    private String jexperience;
+
+    @ApiModelProperty("学历要求")
+    @TableField(exist = false)
+    private String erequirement;
+
+    @ApiModelProperty("职位名称")
+    @TableField(exist = false)
+    private String post;
 
 }
