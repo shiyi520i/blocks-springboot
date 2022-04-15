@@ -6,6 +6,7 @@ import com.shiyi.mybatis_plus.mapper.CompanyinfoMapper;
 import com.shiyi.mybatis_plus.pojo.Weight;
 import com.shiyi.mybatis_plus.service.ICompanyinfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,20 +31,26 @@ public class CompanyinfoServiceImpl extends ServiceImpl<CompanyinfoMapper, Compa
     WeightServiceImpl weightService;
     @Autowired
     CompanyinfoServiceImpl companyinfoService;
+    @Autowired
+    private ParameterServiceImpl parameterService;
 
     @Override
     public List<Companyinfo> getById(Integer id) {
         return companyinfoMapper.getById(id);
     }
 
+    public Companyinfo getOneByLoginId(String loginId){
+        return companyinfoMapper.getOneByLoginId(loginId);
+    }
 
     @Override
-    public Companyinfo getComOne(Integer id){
-        Companyinfo b = companyinfoMapper.getById(id).get(0);
-        Weight weight = weightService.getByCid(id);
+    public Companyinfo getComOne(String id){
+        Companyinfo b = companyinfoMapper.getOneByLoginId(id);
+        b.setTType(parameterService.getById(b.getType()).getName());
+/*        Weight weight = weightService.getByCid(id);
         weight.setCid(id);
         weight.setWeight(weight.getWeight()+1);
-        weightService.saveOrUpdate(weight);
+        weightService.saveOrUpdate(weight);*/
         return b;
     }
 

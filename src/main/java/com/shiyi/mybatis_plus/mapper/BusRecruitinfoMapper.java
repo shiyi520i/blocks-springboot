@@ -23,7 +23,7 @@ import java.util.List;
 @Mapper
 public interface BusRecruitinfoMapper extends BaseMapper<BusRecruitinfo> {
 
-    List<BusRecruitinfo> findByEId(@Param("eId") Integer eId);
+    List<BusRecruitinfo> findByEId(@Param("eId") String eId);
 
     List<BusRecruitinfo> findByRId(@Param("rId") Integer rId);
 

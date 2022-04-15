@@ -19,6 +19,6 @@ public interface ICompanyinfoService extends IService<Companyinfo> {
 
     List<Companyinfo> getById(@Param("id") Integer id);
 
-     Companyinfo getComOne(Integer id);
+     Companyinfo getComOne(String id);
 
 }

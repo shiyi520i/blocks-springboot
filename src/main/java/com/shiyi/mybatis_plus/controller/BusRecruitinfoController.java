@@ -3,6 +3,7 @@ package com.shiyi.mybatis_plus.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shiyi.mybatis_plus.pojo.BusRecruitinfo;
+import com.shiyi.mybatis_plus.pojo.Record;
 import com.shiyi.mybatis_plus.pojo.ReqData;
 import com.shiyi.mybatis_plus.service.impl.BusRecruitinfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +60,9 @@ public class BusRecruitinfoController {
      * @date 2022/3/25 14:18
      */
     @RequestMapping(value = "/postone", method = RequestMethod.POST)
-    public BusRecruitinfo getPostOne(@RequestBody ReqData rd) {
+    public BusRecruitinfo getPostOne(@RequestBody Record rd) {
 
-        return busRecruitinfoService.postOne(rd.getId(), null, rd.getUid(), null);
+        return busRecruitinfoService.postOne(rd.getId(), rd.getCid(), rd.getUid(), rd.getPost());
     }
 
     /**

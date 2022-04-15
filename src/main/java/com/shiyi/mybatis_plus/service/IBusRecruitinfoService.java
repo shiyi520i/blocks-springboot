@@ -24,8 +24,8 @@ public interface IBusRecruitinfoService extends IService<BusRecruitinfo> {
 
     Page<BusRecruitinfo> selectPageRec(Page page, QueryWrapper q);
 
-    BusRecruitinfo findByEId( Integer eId);
+    BusRecruitinfo findByEId(String eId);
 
-    BusRecruitinfo findByRId( Integer eId);
+    BusRecruitinfo findByRId(Integer eId);
 
 }

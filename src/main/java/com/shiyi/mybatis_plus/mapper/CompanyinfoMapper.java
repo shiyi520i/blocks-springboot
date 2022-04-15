@@ -19,4 +19,6 @@ public interface CompanyinfoMapper extends BaseMapper<Companyinfo> {
 
     List<Companyinfo> getById(@Param("id") Integer id);
 
+    Companyinfo getOneByLoginId(@Param("loginId") String loginId);
+
 }

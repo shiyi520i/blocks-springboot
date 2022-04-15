@@ -18,7 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, companyname, `type`, `number`, landline, email, province, city, area, address
+        login_id, companyname, `type`, `number`, landline, email, province, city, area, address,logo,status
     </sql>
     <select id="getAllById" resultMap="BaseResultMap">
         select
@@ -27,12 +27,20 @@
         where
         id = #{id,jdbcType=NUMERIC}
     </select>
+
     <select id="getById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_bus_companyinfo
         where
-        id = #{id,jdbcType=NUMERIC}
+        login_id = #{id,jdbcType=NUMERIC}
+    </select>
+    <select id="getOneByLoginId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_bus_companyinfo
+        where
+        login_id = #{loginId,jdbcType=VARCHAR}
     </select>
 
 </mapper>

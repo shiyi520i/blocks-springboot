@@ -34,7 +34,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        r_id, e_id, r_post, r_jdescript, r_jaddress, r_jexperience, r_erequirement, r_jduty, r_jrequirement, r_number, r_minsalary, r_status, r_time, r_worktype, r_welfare, r_ischeck, r_stats, r_age, r_starttime, r_endtime, r_maxsalary, r_province, r_city, r_area, r_ztype, r_welfares
+        r_id, e_id, r_post, r_jdescript, r_jaddress, r_jexperience, r_erequirement, r_jduty, r_jrequirement, r_number, r_minsalary, r_status, r_time, r_worktype, r_welfare, r_ischeck, r_stats, r_age, r_starttime, r_endtime, r_maxsalary, r_province, r_city, r_area, r_ztype, r_welfares,conname,conphone,conemail
     </sql>
 
     <select id="findAllByEId" resultMap="BaseResultMap">
@@ -44,19 +44,21 @@
         where
         e_id = #{eId,jdbcType=NUMERIC}
     </select>
-    <select id="findByEId" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_bus_recruitinfo
-        where
-        e_id = #{eId,jdbcType=NUMERIC}
-    </select>
+
+
     <select id="findByRId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_bus_recruitinfo
         where
         r_id = #{rId,jdbcType=NUMERIC}
+    </select>
+    <select id="findByEId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_bus_recruitinfo
+        where
+        e_id = #{eId,jdbcType=VARCHAR}
     </select>
 
 </mapper>

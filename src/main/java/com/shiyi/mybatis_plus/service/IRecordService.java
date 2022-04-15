@@ -14,6 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IRecordService extends IService<Record> {
 
-    Result<Record> applyPost(Integer rid, Integer eid, String rpost, String uid);
+    Result<Record> applyPost(Integer rid, String eid, String rpost, String uid);
 
 }

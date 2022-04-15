@@ -25,7 +25,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     RecordServiceImpl recordService;
 
     @Override
-    public Result<Record> applyPost(Integer rid, Integer eid, String rpost, String uid) {
+    public Result<Record> applyPost(Integer rid, String eid, String rpost, String uid) {
         Result<Record> result = new Result<>();
         if (uid == null) {
             result.setMsg("申请失败,请先登录。").setCode(400);

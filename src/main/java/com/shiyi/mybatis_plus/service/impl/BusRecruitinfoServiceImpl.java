@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,12 +50,12 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
     }
 
     @Override
-    public BusRecruitinfo findByEId( Integer eId){
+    public BusRecruitinfo findByEId(String eId){
         return busRecruitinfoMapper.findByEId(eId).get(0);
     }
 
     @Override
-    public BusRecruitinfo findByRId( Integer eId){
+    public BusRecruitinfo findByRId(Integer eId){
         List<BusRecruitinfo> b = busRecruitinfoMapper.findByRId(eId);
         return b.size()==0?null:b.get(0);
     }
@@ -71,7 +72,7 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
         Page<BusRecruitinfo> b = busRecruitinfoService.selectPageRec(page, q);
          b.getRecords().stream().map(x -> {
 
-            Companyinfo c = companyinfoService.getById(x.getEId());
+            Companyinfo c = companyinfoService.getOneByLoginId(x.getEId());
             //设置时间
             DateTime date = DateUtil.date(Calendar.getInstance());
             DateTime dateTime = DateUtil.offsetDay(date, -1);
@@ -99,19 +100,34 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
          return b;
     }
 
-    public BusRecruitinfo postOne(Integer id,Integer cid,String uid,String postname){
+    public BusRecruitinfo postOne(Integer id,String cid,String uid,String postname){
+        BusRecruitinfo b=busRecruitinfoService.findByRId(id);
+        //转工作年龄要求
+        b.setJexperience(parameterService.getById(b.getRJexperience()).getName());
+        //转学历要求
+        b.setErequirement(parameterService.getById(b.getRErequirement()).getName());
 
+        //返回统计记录
+        b.setCount(busRecruitinfoService.countPostAndRecord(cid));
         if(uid!=null){
             Record r = new Record();
             r.setUid(uid).setPost(postname).setCid(cid).setType(3);
             recordService.save(r);
         }
-        return busRecruitinfoService.findByRId(id);
+        return b;
     }
 
 
     public boolean savePost(BusRecruitinfo busRecruitinfo){
-
         return busRecruitinfoService.saveOrUpdate(busRecruitinfo);
+    }
+
+    public List<Long> countPostAndRecord(String cid){
+        long postCount= busRecruitinfoMapper.selectCount(new QueryWrapper<BusRecruitinfo>().eq("e_id", cid));
+        long recordCount = recordService.count(new QueryWrapper<Record>().eq("cid", cid).eq("type", 3));
+        List<Long>  count= new ArrayList<>();
+        count.add(postCount);
+        count.add(recordCount);
+        return count;
     }
 }

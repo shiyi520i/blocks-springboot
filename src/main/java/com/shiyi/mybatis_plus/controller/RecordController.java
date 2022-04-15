@@ -39,7 +39,7 @@ public class RecordController {
      */
     @RequestMapping(value = "applypost",method = RequestMethod.GET)
     public Result<Record> applyPost(@RequestParam("rid") Integer rid,
-                                    @RequestParam("eid") Integer eid,
+                                    @RequestParam("eid") String eid,
                                     @RequestParam("rpost") String rpost,
                                     @RequestParam("uid") String uid){
         return recordService.applyPost(rid,eid,rpost,uid);

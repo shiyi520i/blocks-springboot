@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -127,6 +129,18 @@ public class BusRecruitinfo implements Serializable {
     @TableField("r_welfares")
     private String rWelfares;
 
+    @ApiModelProperty("联系人姓名")
+    @TableField("conname")
+    private String conName;
+
+    @ApiModelProperty("联系人电话")
+    @TableField("conphone")
+    private String conPhone;
+
+    @ApiModelProperty("联系人邮箱")
+    @TableField("conemail")
+    private String conEmail;
+
     @ApiModelProperty("公司名称")
     @TableField(exist = false)
     private String rname;
@@ -154,5 +168,10 @@ public class BusRecruitinfo implements Serializable {
     @ApiModelProperty("职位名称")
     @TableField(exist = false)
     private String post;
+
+    @ApiModelProperty("统计记录")
+    @TableField(exist = false)
+    private List<Long> count;
+
 
 }

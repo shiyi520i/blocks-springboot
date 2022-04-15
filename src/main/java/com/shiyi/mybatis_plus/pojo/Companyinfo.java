@@ -26,7 +26,7 @@ public class Companyinfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId("login_id")
-    private Integer id;
+    private String loginId;
 
     @ApiModelProperty("公司名称")
     @TableField("companyname")
@@ -68,5 +68,8 @@ public class Companyinfo implements Serializable {
     @TableField("logo")
     private String logo;
 
+    @ApiModelProperty("行业类型转换")
+    @TableField(exist = false)
+    private String TType;
 
 }

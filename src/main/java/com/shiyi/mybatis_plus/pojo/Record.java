@@ -34,7 +34,7 @@ public class Record implements Serializable {
 
     @ApiModelProperty("公司id")
     @TableField("cid")
-    private Integer cid;
+    private String cid;
 
     @ApiModelProperty("用户id")
     @TableField("uid")
