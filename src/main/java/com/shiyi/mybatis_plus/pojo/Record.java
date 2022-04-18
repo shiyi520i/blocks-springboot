@@ -36,6 +36,10 @@ public class Record implements Serializable {
     @TableField("cid")
     private String cid;
 
+    @ApiModelProperty("职位id")
+    @TableField("rid")
+    private Integer rid;
+
     @ApiModelProperty("用户id")
     @TableField("uid")
     private String uid;

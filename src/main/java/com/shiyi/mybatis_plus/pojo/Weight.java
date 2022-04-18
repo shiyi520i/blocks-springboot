@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,34 +15,30 @@ import lombok.Setter;
  * </p>
  *
  * @author ShiYi
- * @since 2022-03-24
+ * @since 2022-04-18
  */
-@Builder
-@Data
+@Getter
+@Setter
 @TableName("t_bus_weight")
 @ApiModel(value = "Weight对象", description = "")
 public class Weight implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("id")
-    private Integer id;
-
     @ApiModelProperty("公司id")
-    @TableField("cid")
-    private Integer cid;
-
-    @ApiModelProperty("公司名称")
-    @TableField("`name`")
-    private String name;
-
-    @ApiModelProperty("行业类型")
-    @TableField("`type`")
-    private String type;
+    @TableId("loginid")
+    private String loginid;
 
     @ApiModelProperty("权重")
     @TableField("weight")
     private Double weight;
 
+    @ApiModelProperty("公司类型")
+    @TableField(exist = false)
+    private String type;
+
+    @ApiModelProperty("公司名称")
+    @TableField(exist = false)
+    private String name;
 
 }

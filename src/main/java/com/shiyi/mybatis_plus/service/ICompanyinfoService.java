@@ -17,8 +17,6 @@ import java.util.List;
  */
 public interface ICompanyinfoService extends IService<Companyinfo> {
 
-    List<Companyinfo> getById(@Param("id") Integer id);
-
      Companyinfo getComOne(String id);
 
 }

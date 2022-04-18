@@ -38,5 +38,9 @@ public class Parameter implements Serializable {
     @TableField("`name`")
     private String name;
 
+    @ApiModelProperty("参数代号")
+    @TableField("code")
+    private String code;
+
 
 }

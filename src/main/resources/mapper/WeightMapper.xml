@@ -4,23 +4,20 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.shiyi.mybatis_plus.pojo.Weight">
-        <id column="id" property="id" />
-        <result column="cid" property="cid" />
-        <result column="name" property="name" />
-        <result column="type" property="type" />
+        <id column="loginid" property="loginid" />
         <result column="weight" property="weight" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, cid, `name`, `type`, weight
+        loginid, weight
     </sql>
-    <select id="getByCid" resultMap="BaseResultMap">
+    <select id="getOneByLoginid" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_bus_weight
         where
-        cid = #{cid,jdbcType=NUMERIC}
+        loginid = #{loginid,jdbcType=VARCHAR}
     </select>
 
 </mapper>

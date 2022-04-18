@@ -1,6 +1,7 @@
 package com.shiyi.mybatis_plus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.shiyi.mybatis_plus.pojo.Companyinfo;
 import com.shiyi.mybatis_plus.pojo.Weight;
 import com.shiyi.mybatis_plus.mapper.WeightMapper;
 import com.shiyi.mybatis_plus.service.IWeightService;
@@ -10,30 +11,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author ShiYi
- * @since 2022-03-24
+ * @since 2022-04-18
  */
 @Service
 public class WeightServiceImpl extends ServiceImpl<WeightMapper, Weight> implements IWeightService {
 
     @Autowired
-    WeightMapper weightMapper;
+    private WeightMapper weightMapper;
+    @Autowired
+    private ParameterServiceImpl parameterService;
+    @Autowired
+    private CompanyinfoServiceImpl companyinfoService;
 
-    @Override
-    public List<Weight> getWeight(){
+
+    public List<Weight> getWeight() {
         QueryWrapper<Weight> w = new QueryWrapper<>();
         w.orderByDesc("weight").last("limit 5");
-        return weightMapper.selectList(w);
+        List<Weight> weights = weightMapper.selectList(w);
+        weights.stream()
+                .map(x -> {
+                    Companyinfo c = companyinfoService.getOneByLoginId(x.getLoginid());
+                    x.setType(parameterService.getById(c.getType()).getName());
+                    x.setName(c.getCompanyname());
+                    return x;
+                }).collect(Collectors.toList());
+        return weights;
     }
 
-    @Override
-    public Weight getByCid(Integer cid){
-        return weightMapper.getByCid(cid).get(0);
+    public Weight getOneByLoginid(String loginid) {
+        return weightMapper.getOneByLoginid(loginid);
     }
+
+
 }

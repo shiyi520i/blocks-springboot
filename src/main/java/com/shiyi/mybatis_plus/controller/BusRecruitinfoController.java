@@ -31,7 +31,7 @@ public class BusRecruitinfoController {
      * @param keyword  搜索关键字
      * @param pageNo   页面大小
      * @param pageSize 当前页
-     * @param time     发布时间
+     * @param species  学历要求
      * @param worktype 是否全职
      * @param salary   薪资范围
      * @param jobtype  职位类型
@@ -43,12 +43,12 @@ public class BusRecruitinfoController {
     public IPage<BusRecruitinfo> getPage(@RequestParam("keyword") String keyword,
                                          @RequestParam("pageNo") Integer pageNo,
                                          @RequestParam("pageSize") Integer pageSize,
-                                         @RequestParam("time") String time,
+                                         @RequestParam("species") Integer species,
                                          @RequestParam("worktype") String worktype,
                                          @RequestParam("salary") String salary,
                                          @RequestParam("jobtype") String jobtype
     ) {
-        return busRecruitinfoService.selectPage(keyword, pageNo, pageSize, time, worktype, salary, jobtype);
+        return busRecruitinfoService.selectPage(keyword, pageNo, pageSize, species, worktype, salary, jobtype);
     }
 
 

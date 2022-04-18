@@ -34,10 +34,6 @@ public class CompanyinfoServiceImpl extends ServiceImpl<CompanyinfoMapper, Compa
     @Autowired
     private ParameterServiceImpl parameterService;
 
-    @Override
-    public List<Companyinfo> getById(Integer id) {
-        return companyinfoMapper.getById(id);
-    }
 
     public Companyinfo getOneByLoginId(String loginId){
         return companyinfoMapper.getOneByLoginId(loginId);
@@ -47,10 +43,10 @@ public class CompanyinfoServiceImpl extends ServiceImpl<CompanyinfoMapper, Compa
     public Companyinfo getComOne(String id){
         Companyinfo b = companyinfoMapper.getOneByLoginId(id);
         b.setTType(parameterService.getById(b.getType()).getName());
-/*        Weight weight = weightService.getByCid(id);
-        weight.setCid(id);
+        Weight weight = weightService.getOneByLoginid(id);
+        weight.setLoginid(id);
         weight.setWeight(weight.getWeight()+1);
-        weightService.saveOrUpdate(weight);*/
+        weightService.saveOrUpdate(weight);
         return b;
     }
 

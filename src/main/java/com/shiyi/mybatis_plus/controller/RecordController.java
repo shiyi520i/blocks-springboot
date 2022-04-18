@@ -6,11 +6,8 @@ import com.shiyi.mybatis_plus.common.Result;
 import com.shiyi.mybatis_plus.pojo.Record;
 import com.shiyi.mybatis_plus.service.impl.RecordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 /**
@@ -25,24 +22,17 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/record")
 public class RecordController {
     @Autowired
-    RecordServiceImpl recordService;
+    private RecordServiceImpl recordService;
 
     /**
      *  申请职位
      * @author ShiYi
-     * @param rid     职位id
-     * @param eid     公司id
-     * @param rpost   职位名称
-     * @param uid     用户id
      * @return com.shiyi.mybatis_plus.common.Result<com.shiyi.mybatis_plus.pojo.Record>
      * @date 2022/3/24 15:52
      */
-    @RequestMapping(value = "applypost",method = RequestMethod.GET)
-    public Result<Record> applyPost(@RequestParam("rid") Integer rid,
-                                    @RequestParam("eid") String eid,
-                                    @RequestParam("rpost") String rpost,
-                                    @RequestParam("uid") String uid){
-        return recordService.applyPost(rid,eid,rpost,uid);
+    @RequestMapping(value = "applypost",method = RequestMethod.POST)
+    public Result<Record> applyPost(@RequestBody Record record){
+        return recordService.applyPost(record.getRid(),record.getCid(),record.getPost(),record.getUid());
     }
 
     /**

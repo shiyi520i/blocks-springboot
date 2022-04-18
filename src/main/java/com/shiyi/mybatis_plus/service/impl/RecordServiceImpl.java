@@ -32,13 +32,11 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         } else {
 
             Record record = new Record();
-            record.setUid(uid).setCid(eid).setType(2).setPost(rpost);
+            record.setUid(uid).setCid(eid).setType(2).setPost(rpost).setRid(rid);
             result.setMsg("成功").setCode(200);
-            recordService.save(record);
-
+            recordService.saveOrUpdate(record);
         }
         return result;
-
     }
 
     public Mono<Page<Record>> getRecordsPage(Integer pageNo, Integer pageSize, String uid, Integer type){
