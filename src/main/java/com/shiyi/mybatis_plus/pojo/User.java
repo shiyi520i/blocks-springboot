@@ -65,8 +65,8 @@ public class User implements Serializable {
     private String graduate;
 
     @ApiModelProperty("期望职位")
-    @TableField("postition")
-    private String postition;
+    @TableField("position")
+    private String position;
 
     @ApiModelProperty("头像地址")
     @TableField("avatar")

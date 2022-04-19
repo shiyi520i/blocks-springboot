@@ -11,12 +11,11 @@
         <result column="greatnum" property="greatnum" />
         <result column="scannum" property="scannum" />
         <result column="summary" property="summary" />
-        <result column="author" property="author" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, authorid, content, greatnum, scannum, summary, author
+        id, title, authorid, content, greatnum, scannum, summary,image
     </sql>
 
 </mapper>

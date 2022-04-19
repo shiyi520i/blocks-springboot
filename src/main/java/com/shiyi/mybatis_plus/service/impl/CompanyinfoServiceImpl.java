@@ -16,7 +16,7 @@ import static java.lang.Long.parseLong;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author ShiYi
@@ -26,31 +26,31 @@ import static java.lang.Long.parseLong;
 public class CompanyinfoServiceImpl extends ServiceImpl<CompanyinfoMapper, Companyinfo> implements ICompanyinfoService {
 
     @Autowired
-    CompanyinfoMapper companyinfoMapper;
+    private CompanyinfoMapper companyinfoMapper;
     @Autowired
-    WeightServiceImpl weightService;
+    private WeightServiceImpl weightService;
     @Autowired
-    CompanyinfoServiceImpl companyinfoService;
+    private CompanyinfoServiceImpl companyinfoService;
     @Autowired
     private ParameterServiceImpl parameterService;
 
 
-    public Companyinfo getOneByLoginId(String loginId){
+    public Companyinfo getOneByLoginId(String loginId) {
         return companyinfoMapper.getOneByLoginId(loginId);
     }
 
     @Override
-    public Companyinfo getComOne(String id){
+    public Companyinfo getComOne(String id) {
         Companyinfo b = companyinfoMapper.getOneByLoginId(id);
         b.setTType(parameterService.getById(b.getType()).getName());
         Weight weight = weightService.getOneByLoginid(id);
         weight.setLoginid(id);
-        weight.setWeight(weight.getWeight()+1);
+        weight.setWeight(weight.getWeight() + 1);
         weightService.saveOrUpdate(weight);
         return b;
     }
 
-    public Page<Companyinfo> getAllCom(Integer pageNo,Integer pageSize){
+    public Page<Companyinfo> getAllCom(Integer pageNo, Integer pageSize) {
         return companyinfoService.page(new Page<Companyinfo>().setCurrent(pageNo).setSize(pageSize));
     }
 

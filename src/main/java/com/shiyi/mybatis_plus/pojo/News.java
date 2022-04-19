@@ -37,7 +37,7 @@ public class News implements Serializable {
 
     @ApiModelProperty("作者id")
     @TableField("authorid")
-    private Integer authorid;
+    private String authorid;
 
     @ApiModelProperty("文章内容")
     @TableField("content")
@@ -56,7 +56,7 @@ public class News implements Serializable {
     private String summary;
 
     @ApiModelProperty("作者")
-    @TableField("author")
+    @TableField(exist = false)
     private String author;
 
     @TableField("html")
@@ -64,4 +64,12 @@ public class News implements Serializable {
 
     @TableField("`time`")
     private LocalDateTime time;
+
+    @ApiModelProperty("预览图")
+    @TableField("image")
+    private String image;
+
+    @ApiModelProperty("头像")
+    @TableField(exist = false)
+    private String avatar;
 }

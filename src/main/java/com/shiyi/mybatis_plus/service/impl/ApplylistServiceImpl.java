@@ -2,6 +2,7 @@ package com.shiyi.mybatis_plus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.shiyi.mybatis_plus.Utils.Route;
 import com.shiyi.mybatis_plus.pojo.Applylist;
 import com.shiyi.mybatis_plus.mapper.ApplylistMapper;
 import com.shiyi.mybatis_plus.service.IApplylistService;
@@ -35,7 +36,7 @@ public class ApplylistServiceImpl extends ServiceImpl<ApplylistMapper, Applylist
 
     @SneakyThrows
     public Mono<String> uploadImg(Mono<FilePart> file) {
-        return fileService.cosUpload(file, "documents/");
+        return fileService.cosUpload(file, Route.APPLY);
     }
 
     public Mono<Page<Applylist>> getAll(Integer pageNo, Integer pageSize,Integer type) {

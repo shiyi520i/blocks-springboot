@@ -4,7 +4,6 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.shiyi.mybatis_plus.pojo.Companyinfo">
-        <id column="id" property="id" />
         <result column="companyname" property="companyname" />
         <result column="type" property="type" />
         <result column="number" property="number" />
@@ -18,7 +17,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        login_id, companyname, `type`, `number`, landline, email, province, city, area, address,logo,status
+        login_id, companyname, `type`, `number`, landline, email, province, city, area, address,logo,status,introduction
     </sql>
     <select id="getAllById" resultMap="BaseResultMap">
         select

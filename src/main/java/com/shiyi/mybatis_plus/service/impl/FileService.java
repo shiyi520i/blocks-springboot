@@ -8,6 +8,7 @@ import com.qcloud.cos.http.HttpProtocol;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
 import com.qcloud.cos.region.Region;
+import com.shiyi.mybatis_plus.Utils.Route;
 import com.shiyi.mybatis_plus.support.CosProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.buffer.DataBufferUtils;
@@ -35,7 +36,7 @@ public class FileService {
     @Autowired
     private CosProperties cosProperties;
 
-    public Mono<String> cosUpload(Mono<FilePart> file,String key) throws IOException {
+    public Mono<String> cosUpload(Mono<FilePart> file, Route key) throws IOException {
         return file.map(filePart -> {
             Path tempFile = null;
             try {
@@ -57,8 +58,7 @@ public class FileService {
     }
 
 
-    public Mono<String> cosUpload(File file,String key) {
-        //String key = "images/";
+    public Mono<String> cosUpload(File file,Route key) {
         COSCredentials cred = new BasicCOSCredentials(cosProperties.getSecretId(), cosProperties.getSecretKey());
         // clientConfig 中包含了设置 region, https(默认 http), 超时, 代理等 set 方法, 使用可参见源码或者常见问题 Java SDK 部分。
         ClientConfig clientConfig = new ClientConfig(new Region(cosProperties.getRegion()));
@@ -67,9 +67,9 @@ public class FileService {
         //  生成 cos 客户端。
         COSClient cosClient = new COSClient(cred, clientConfig);
         //存储桶，文件夹，文件
-        PutObjectRequest putObjectRequest = new PutObjectRequest(cosProperties.getBucket(), key + file.getName(), file);
+        PutObjectRequest putObjectRequest = new PutObjectRequest(cosProperties.getBucket(), key +"/"+ file.getName(), file);
         PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
-        String calbackPath= "https://"+cosProperties.getBucket()+".cos."+cosProperties.getRegion()+".myqcloud.com/" + key + file.getName();
+        String calbackPath= "https://"+cosProperties.getBucket()+".cos."+cosProperties.getRegion()+".myqcloud.com/" + key +"/"+ file.getName();
         return Mono.just(calbackPath);
     }
 }

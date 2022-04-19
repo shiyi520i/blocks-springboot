@@ -72,4 +72,8 @@ public class Companyinfo implements Serializable {
     @TableField(exist = false)
     private String TType;
 
+    @ApiModelProperty("公司简介")
+    @TableField("introduction")
+    private String introduction;
+
 }

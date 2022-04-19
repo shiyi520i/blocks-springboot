@@ -4,10 +4,11 @@ package com.shiyi.mybatis_plus.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shiyi.mybatis_plus.pojo.BusRecruitinfo;
 import com.shiyi.mybatis_plus.pojo.Record;
-import com.shiyi.mybatis_plus.pojo.ReqData;
 import com.shiyi.mybatis_plus.service.impl.BusRecruitinfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -53,32 +54,76 @@ public class BusRecruitinfoController {
 
 
     /**
-     *  展示职位信息
-     * @author ShiYi
-     * @param rd   接收职位信息参数
+     * 展示职位信息
+     *
+     * @param rd 接收职位信息参数
      * @return com.shiyi.mybatis_plus.pojo.BusRecruitinfo
+     * @author ShiYi
      * @date 2022/3/25 14:18
      */
     @RequestMapping(value = "/postone", method = RequestMethod.POST)
     public BusRecruitinfo getPostOne(@RequestBody Record rd) {
-
         return busRecruitinfoService.postOne(rd.getId(), rd.getCid(), rd.getUid(), rd.getPost());
     }
 
+    @RequestMapping(value = "/postinfo", method = RequestMethod.GET)
+    public BusRecruitinfo getPostInfo(@RequestParam("rid") Integer rid) {
+        return busRecruitinfoService.postOne(rid);
+    }
+
     /**
-     *  保存或更新职位信息
-     * @author ShiYi
+     * 保存或更新职位信息
+     *
      * @param busRecruitinfo 职位实体
      * @return boolean
+     * @author ShiYi
      * @date 2022/4/13 15:35
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public boolean savePost(@RequestBody BusRecruitinfo busRecruitinfo) {
-
         return busRecruitinfoService.savePost(busRecruitinfo);
     }
 
 
+    /**
+     * @param keyword  公司id关键字
+     * @param pageNo   当前页
+     * @param pageSize 页大小
+     * @return com.baomidou.mybatisplus.core.metadata.IPage<com.shiyi.mybatis_plus.pojo.BusRecruitinfo>
+     * @author ShiYi
+     * @date 2022/4/19 9:28
+     */
+    @RequestMapping(value = "/getpagesim", method = RequestMethod.GET)
+    public IPage<BusRecruitinfo> getPageSim(@RequestParam(value = "keyword", required = false) String keyword,
+                                            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+                                            @RequestParam("pageSize") Integer pageSize,
+                                            @RequestParam(value = "cn", required = false) String companyName) {
+        return busRecruitinfoService.selectPageSim(keyword, pageNo, pageSize, companyName);
+    }
+
+    /**
+     * @param loginId 公司id
+     * @return java.util.List<java.lang.Long>
+     * @author ShiYi
+     * @date 2022/4/19 9:28
+     */
+    @RequestMapping(value = "/getcount", method = RequestMethod.GET)
+    public List<Long> getCount(@RequestParam("loginId") String loginId) {
+        return busRecruitinfoService.countPostAndRecord(loginId);
+    }
+
+    /**
+     * 删除职位信息
+     *
+     * @param busRecruitinfo 职位信息
+     * @return boolean
+     * @author ShiYi
+     * @date 2022/4/19 16:16
+     */
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+    public boolean remove(@RequestBody BusRecruitinfo busRecruitinfo) {
+        return busRecruitinfoService.removeById(busRecruitinfo);
+    }
 }
 
 

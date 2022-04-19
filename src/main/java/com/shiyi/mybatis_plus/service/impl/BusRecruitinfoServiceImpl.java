@@ -8,14 +8,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.mybatis_plus.Utils.SUtil;
+import com.shiyi.mybatis_plus.common.Result;
 import com.shiyi.mybatis_plus.pojo.BusRecruitinfo;
 import com.shiyi.mybatis_plus.mapper.BusRecruitinfoMapper;
 import com.shiyi.mybatis_plus.pojo.Companyinfo;
+import com.shiyi.mybatis_plus.pojo.News;
 import com.shiyi.mybatis_plus.pojo.Record;
 import com.shiyi.mybatis_plus.service.IBusRecruitinfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -118,6 +121,15 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
         return b;
     }
 
+    public BusRecruitinfo postOne(Integer id){
+        BusRecruitinfo b=busRecruitinfoService.findByRId(id);
+        //转工作年龄要求
+        b.setJexperience(parameterService.getById(b.getRJexperience()).getName());
+        //转学历要求
+        b.setErequirement(parameterService.getById(b.getRErequirement()).getName());
+
+        return b;
+    }
 
     public boolean savePost(BusRecruitinfo busRecruitinfo){
         return busRecruitinfoService.saveOrUpdate(busRecruitinfo);
@@ -131,5 +143,36 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
         count.add(recordCount);
 
         return count;
+    }
+
+
+    public IPage<BusRecruitinfo> selectPageSim(String keyword,Integer pageNo,Integer pageSize,String companyName) {
+        QueryWrapper<Object> q = new QueryWrapper<>();
+        if (keyword!=null)
+            q.eq("e_id", keyword);
+        /*if (companyName!=null)
+            q.like("companyname",companyName);*/
+        Page<BusRecruitinfo> b = busRecruitinfoService.selectPageRec(new Page<>().setCurrent(pageNo).setSize(pageSize), q);
+        b.getRecords().stream().map(x -> {
+            Companyinfo c = companyinfoService.getOneByLoginId(x.getEId());
+            //福利条件切割
+            String[] r_welfares = x.getRWelfares().split(",");
+            x.setWelfares(r_welfares);
+            //设置公司名称
+            x.setRname(c.getCompanyname());
+            //显示公司logo
+            x.setRlogo(c.getLogo());
+            //实现高亮
+            x.setPost("<span style=\"color:#FA509F;\">" + x.getRPost()+ "</span>");
+            //转工作年龄要求
+            x.setJexperience(parameterService.getById(x.getRJexperience()).getName());
+            //转学历要求
+            x.setErequirement(parameterService.getById(x.getRErequirement()).getName());
+            //显示类型
+            x.setType(parameterService.getById(c.getType()).getName());
+            return x;
+        }).collect(Collectors.toList());
+
+        return b;
     }
 }

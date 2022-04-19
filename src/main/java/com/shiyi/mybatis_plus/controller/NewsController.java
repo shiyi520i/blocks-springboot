@@ -2,6 +2,8 @@ package com.shiyi.mybatis_plus.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.shiyi.mybatis_plus.Utils.Route;
+import com.shiyi.mybatis_plus.common.Result;
 import com.shiyi.mybatis_plus.pojo.News;
 import com.shiyi.mybatis_plus.service.impl.FileService;
 import com.shiyi.mybatis_plus.service.impl.NewsServiceImpl;
@@ -47,14 +49,14 @@ public class NewsController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public Mono<String> remove(@RequestBody News news) {
+    public Mono<Result> remove(@RequestBody News news) {
         return newsService.remove(news);
     }
 
     @SneakyThrows
-    @RequestMapping(value = "u", method = RequestMethod.POST)
+    @RequestMapping(value = "image", method = RequestMethod.POST)
     public Mono<String> single(@RequestPart("file") Mono<FilePart> file) {
-        return fileService.cosUpload(file,"imges");
+        return fileService.cosUpload(file, Route.NEWS);
     }
 
 }

@@ -14,7 +14,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-         login_id, username, email, age, address, phone
+         login_id, username, email, age, address, phone,cvurl,grtime,graduate,position,avatar
     </sql>
 
     <select id="getOneByLoginId" resultMap="BaseResultMap">

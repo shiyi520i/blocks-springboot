@@ -16,14 +16,11 @@ import com.shiyi.mybatis_plus.pojo.Parameter;
 import com.shiyi.mybatis_plus.service.impl.ParameterServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.reactive.function.server.ServerRequest;
 
 import java.io.File;
 import java.util.*;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootTest
@@ -101,4 +98,8 @@ class MybatisPlusApplicationTests {
     }
 
 
+    @Test
+    public void test5() {
+
+    }
 }
