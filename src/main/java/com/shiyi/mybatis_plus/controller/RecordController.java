@@ -46,7 +46,7 @@ public class RecordController {
      * @date 2022/4/2 11:33
      */
     @RequestMapping(value = "getrecords",method = RequestMethod.GET)
-    public Mono<Page<Record>> getRecordsPage(@RequestParam("pageNo") Integer pageNo,
+    public Mono<Page<Record>> getRecordsPage(@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
                                              @RequestParam("pageSize") Integer pageSize,
                                              @RequestParam("uid") String uid,
                                              @RequestParam("type") Integer type){

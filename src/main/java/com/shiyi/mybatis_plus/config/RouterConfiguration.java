@@ -20,10 +20,11 @@ public class RouterConfiguration {
     @Bean
     RouterFunction<ServerResponse> userRouterFunction(UserServiceImpl userService) {
         return RouterFunctions.nest(RequestPredicates.path("/user"),
-                RouterFunctions.route(RequestPredicates.GET("/a"), userService::getAllUsers)
+                RouterFunctions.route(RequestPredicates.GET("/getAllUser"), userService::getAllUsers)
+                        .andRoute(RequestPredicates.GET("/getUser/{id}"), userService::getUser)
                         .andRoute(RequestPredicates.POST("/updatauser/{id}"), userService::updataUser)
                         .andRoute(RequestPredicates.POST("/adduser"), userService::addUser)
-                        .andRoute(RequestPredicates.DELETE("/c/{id}"), userService::deleteUser));
+                        .andRoute(RequestPredicates.DELETE("/delete/{id}"), userService::deleteUser));
     }
 
     @Bean

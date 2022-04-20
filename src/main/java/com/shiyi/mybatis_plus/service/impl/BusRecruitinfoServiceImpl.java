@@ -8,17 +8,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.mybatis_plus.Utils.SUtil;
-import com.shiyi.mybatis_plus.common.Result;
 import com.shiyi.mybatis_plus.pojo.BusRecruitinfo;
 import com.shiyi.mybatis_plus.mapper.BusRecruitinfoMapper;
 import com.shiyi.mybatis_plus.pojo.Companyinfo;
-import com.shiyi.mybatis_plus.pojo.News;
 import com.shiyi.mybatis_plus.pojo.Record;
 import com.shiyi.mybatis_plus.service.IBusRecruitinfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +25,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author ShiYi
@@ -49,32 +46,32 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
     private ParameterServiceImpl parameterService;
 
     @Override
-    public Page<BusRecruitinfo> selectPageRec(Page page, QueryWrapper q){
+    public Page<BusRecruitinfo> selectPageRec(Page page, QueryWrapper q) {
         return busRecruitinfoMapper.selectPage(page, q);
     }
 
     @Override
-    public BusRecruitinfo findByEId(String eId){
+    public BusRecruitinfo findByEId(String eId) {
         return busRecruitinfoMapper.findByEId(eId).get(0);
     }
 
     @Override
-    public BusRecruitinfo findByRId(Integer eId){
+    public BusRecruitinfo findByRId(Integer eId) {
         List<BusRecruitinfo> b = busRecruitinfoMapper.findByRId(eId);
-        return b.size()==0?null:b.get(0);
+        return b.size() == 0 ? null : b.get(0);
     }
 
     @Override
-    public IPage<BusRecruitinfo> selectPage(String keyword,Integer pageNo,Integer pageSize,Integer species,String worktype,String salary,String jobtype) {
-        Integer w=0;
-       if("兼职".equals(worktype) )  w = 1;
+    public IPage<BusRecruitinfo> selectPage(String keyword, Integer pageNo, Integer pageSize, Integer species, String worktype, String salary, String jobtype) {
+        Integer w = 0;
+        if ("兼职".equals(worktype)) w = 1;
         List<Integer> s = SUtil.sToM(salary);
         Page<BusRecruitinfo> page = new Page<>();
         page.setCurrent(pageNo).setSize(pageSize);
         QueryWrapper<BusRecruitinfo> q = new QueryWrapper<>();
-        q.like("r_post",keyword).like("r_ztype",jobtype).ge("r_minsalary",s.get(0)).le("r_maxsalary",s.get(1)).eq("r_worktype",w).eq("r_jexperience",species);
+        q.like("r_post", keyword).like("r_ztype", jobtype).ge("r_minsalary", s.get(0)).le("r_maxsalary", s.get(1)).eq("r_worktype", w).eq("r_jexperience", species);
         Page<BusRecruitinfo> b = busRecruitinfoService.selectPageRec(page, q);
-         b.getRecords().stream().map(x -> {
+        b.getRecords().stream().map(x -> {
 
             Companyinfo c = companyinfoService.getOneByLoginId(x.getEId());
             //设置时间
@@ -101,44 +98,45 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
             return x;
         }).collect(Collectors.toList());
 
-         return b;
+        return b;
     }
 
-    public BusRecruitinfo postOne(Integer id,String cid,String uid,String postname){
-        BusRecruitinfo b=busRecruitinfoService.findByRId(id);
+    public BusRecruitinfo postOne(Integer id, String cid, String uid, String postname) {
+        BusRecruitinfo b = busRecruitinfoService.findByRId(id);
         //转工作年龄要求
         b.setJexperience(parameterService.getById(b.getRJexperience()).getName());
         //转学历要求
         b.setErequirement(parameterService.getById(b.getRErequirement()).getName());
-
         //返回统计记录
         b.setCount(busRecruitinfoService.countPostAndRecord(cid));
-        if(uid!=null){
+        if (uid != null) {
             Record r = new Record();
-            r.setUid(uid).setPost(postname).setCid(cid).setType(3);
+            r.setUid(uid).setPost(postname).setCid(cid).setType(3).setRid(id);
             recordService.save(r);
         }
         return b;
     }
 
-    public BusRecruitinfo postOne(Integer id){
-        BusRecruitinfo b=busRecruitinfoService.findByRId(id);
+    public BusRecruitinfo postOne(Integer id) {
+        BusRecruitinfo b = busRecruitinfoService.findByRId(id);
         //转工作年龄要求
         b.setJexperience(parameterService.getById(b.getRJexperience()).getName());
         //转学历要求
         b.setErequirement(parameterService.getById(b.getRErequirement()).getName());
+        String[] r_welfares = b.getRWelfares().split(",");
+        b.setWelfares(r_welfares);
 
         return b;
     }
 
-    public boolean savePost(BusRecruitinfo busRecruitinfo){
+    public boolean savePost(BusRecruitinfo busRecruitinfo) {
         return busRecruitinfoService.saveOrUpdate(busRecruitinfo);
     }
 
-    public List<Long> countPostAndRecord(String cid){
-        long postCount= busRecruitinfoMapper.selectCount(new QueryWrapper<BusRecruitinfo>().eq("e_id", cid));
+    public List<Long> countPostAndRecord(String cid) {
+        long postCount = busRecruitinfoMapper.selectCount(new QueryWrapper<BusRecruitinfo>().eq("e_id", cid));
         long recordCount = recordService.count(new QueryWrapper<Record>().eq("cid", cid).eq("type", 3));
-        List<Long>  count= new ArrayList<>();
+        List<Long> count = new ArrayList<>();
         count.add(postCount);
         count.add(recordCount);
 
@@ -146,9 +144,9 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
     }
 
 
-    public IPage<BusRecruitinfo> selectPageSim(String keyword,Integer pageNo,Integer pageSize,String companyName) {
+    public IPage<BusRecruitinfo> selectPageSim(String keyword, Integer pageNo, Integer pageSize, String companyName) {
         QueryWrapper<Object> q = new QueryWrapper<>();
-        if (keyword!=null)
+        if (keyword != null)
             q.eq("e_id", keyword);
         /*if (companyName!=null)
             q.like("companyname",companyName);*/
@@ -163,7 +161,7 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
             //显示公司logo
             x.setRlogo(c.getLogo());
             //实现高亮
-            x.setPost("<span style=\"color:#FA509F;\">" + x.getRPost()+ "</span>");
+            x.setPost("<span style=\"color:#FA509F;\">" + x.getRPost() + "</span>");
             //转工作年龄要求
             x.setJexperience(parameterService.getById(x.getRJexperience()).getName());
             //转学历要求

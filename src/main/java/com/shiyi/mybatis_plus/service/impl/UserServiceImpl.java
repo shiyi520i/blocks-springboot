@@ -67,5 +67,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return userMapper.getOneByLoginId(id) == null ? Mono.empty() : Mono.just(true);
     }
 
+    public Mono<ServerResponse> getUser(ServerRequest serverRequest) {
+        return ok().contentType(APPLICATION_JSON)
+                .body(Mono.just(userMapper.selectById(serverRequest.pathVariable("id"))), User.class);
+    }
 
+    public Mono<User> handleUser(String id){
+        User user = userMapper.selectById(id);
+        return Mono.empty();
+    }
 }

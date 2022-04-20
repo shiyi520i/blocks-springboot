@@ -1,5 +1,6 @@
 package com.shiyi.mybatis_plus.pojo;
 
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -172,6 +173,5 @@ public class BusRecruitinfo implements Serializable {
     @ApiModelProperty("统计记录")
     @TableField(exist = false)
     private List<Long> count;
-
 
 }

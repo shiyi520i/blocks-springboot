@@ -45,7 +45,7 @@ public class Record implements Serializable {
     private String uid;
 
     @ApiModelProperty("职位名称")
-    @TableField("post")
+    @TableField(exist = false)
     private String post;
 
     @ApiModelProperty("类型，0：公司邀请面试，1：公司查看个人，2：个人投递简历")
@@ -56,5 +56,8 @@ public class Record implements Serializable {
     @TableField("`time`")
     private LocalDateTime time;
 
+    @ApiModelProperty("公司名称")
+    @TableField(exist = false)
+    private String companyName;
 
 }

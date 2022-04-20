@@ -3,6 +3,7 @@ package com.shiyi.mybatis_plus.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.mybatis_plus.common.Result;
+import com.shiyi.mybatis_plus.pojo.BusRecruitinfo;
 import com.shiyi.mybatis_plus.pojo.Record;
 import com.shiyi.mybatis_plus.mapper.RecordMapper;
 import com.shiyi.mybatis_plus.service.IRecordService;
@@ -10,6 +11,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -23,6 +26,10 @@ import reactor.core.publisher.Mono;
 public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> implements IRecordService {
     @Autowired
     RecordServiceImpl recordService;
+    @Autowired
+    private CompanyinfoServiceImpl companyinfoService;
+    @Autowired
+    private BusRecruitinfoServiceImpl busRecruitinfoService;
 
     @Override
     public Result<Record> applyPost(Integer rid, String eid, String rpost, String uid) {
@@ -39,11 +46,15 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         return result;
     }
 
-    public Mono<Page<Record>> getRecordsPage(Integer pageNo, Integer pageSize, String uid, Integer type){
-       return Mono.just(recordService.page(new Page<Record>()
-                        .setCurrent(pageNo).setSize(pageSize),
-                new QueryWrapper<Record>()
-                        .eq("uid",uid).eq("type",type)));
+    public Mono<Page<Record>> getRecordsPage(Integer pageNo, Integer pageSize, String uid, Integer type) {
+        Page<Record> page = recordService.page(new Page<Record>().setCurrent(pageNo).setSize(pageSize),
+                new QueryWrapper<Record>().eq("uid", uid).eq("type", type));
+        page.getRecords().stream().map(x -> {
+            x.setCompanyName(companyinfoService.getComOne(x.getCid()).getCompanyname());
+            x.setPost(busRecruitinfoService.postOne(x.getRid()).getRPost());
+            return x;
+        }).collect(Collectors.toList());
+        return Mono.just(page);
     }
 
 }

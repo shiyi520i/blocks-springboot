@@ -63,7 +63,7 @@ public class BusRecruitinfoController {
      */
     @RequestMapping(value = "/postone", method = RequestMethod.POST)
     public BusRecruitinfo getPostOne(@RequestBody Record rd) {
-        return busRecruitinfoService.postOne(rd.getId(), rd.getCid(), rd.getUid(), rd.getPost());
+        return busRecruitinfoService.postOne(rd.getRid(), rd.getCid(), rd.getUid(), rd.getPost());
     }
 
     @RequestMapping(value = "/postinfo", method = RequestMethod.GET)
