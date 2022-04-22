@@ -30,14 +30,14 @@ public class ApplylistController {
         return applylistService.uploadImg(file);
     }
 
-    @RequestMapping(value = "saveapply", method = RequestMethod.POST)
+    @RequestMapping(value = "saveApply", method = RequestMethod.POST)
     public Mono<Boolean> saveApply(@RequestBody Applylist applylist) {
         return applylistService.saveApply(applylist);
     }
 
-    @RequestMapping(value = "getall", method = RequestMethod.GET)
-    public Mono<Page<Applylist>> getAll(@RequestParam("pageNo") Integer pageNo,
-                                        @RequestParam("pageSize") Integer pageSize,
+    @RequestMapping(value = "getAll", method = RequestMethod.GET)
+    public Mono<Page<Applylist>> getAll(@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
+                                        @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize,
                                         @RequestParam(value = "type",required = false) Integer type) {
         return applylistService.getAll(pageNo, pageSize,type);
     }
@@ -45,6 +45,11 @@ public class ApplylistController {
     @RequestMapping(value = "getone", method = RequestMethod.GET)
     public void getByApplyId(@RequestParam("id") Integer id) {
         applylistService.getByApplyId(id);
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public void remove(@RequestParam("id") Integer id) {
+        applylistService.removeById(id);
     }
 
 }

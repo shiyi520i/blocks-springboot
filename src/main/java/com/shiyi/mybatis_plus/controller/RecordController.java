@@ -47,7 +47,7 @@ public class RecordController {
      */
     @RequestMapping(value = "getrecords",method = RequestMethod.GET)
     public Mono<Page<Record>> getRecordsPage(@RequestParam(value = "pageNo",defaultValue = "1") Integer pageNo,
-                                             @RequestParam("pageSize") Integer pageSize,
+                                             @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize,
                                              @RequestParam("uid") String uid,
                                              @RequestParam("type") Integer type){
         return recordService.getRecordsPage(pageNo,pageSize,uid,type);

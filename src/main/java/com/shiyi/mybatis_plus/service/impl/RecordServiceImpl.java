@@ -30,6 +30,8 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     private CompanyinfoServiceImpl companyinfoService;
     @Autowired
     private BusRecruitinfoServiceImpl busRecruitinfoService;
+    @Autowired
+    private UserServiceImpl userService;
 
     @Override
     public Result<Record> applyPost(Integer rid, String eid, String rpost, String uid) {
@@ -52,6 +54,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         page.getRecords().stream().map(x -> {
             x.setCompanyName(companyinfoService.getComOne(x.getCid()).getCompanyname());
             x.setPost(busRecruitinfoService.postOne(x.getRid()).getRPost());
+            x.setUserName(userService.getById(x.getUid()).getUsername());
             return x;
         }).collect(Collectors.toList());
         return Mono.just(page);

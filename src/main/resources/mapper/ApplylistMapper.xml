@@ -21,7 +21,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, unitname, address, license, represent, representphone, `number`, frontimg, backimg, handimg, phone, `time`, `type`
+        id, unitname, address, license, represent, representphone, `number`, frontimg, backimg, handimg, phone, `time`, `type`,loginid
     </sql>
 
 </mapper>

@@ -30,6 +30,10 @@ public class Applylist implements Serializable {
     @TableId("id")
     private Integer id;
 
+    @ApiModelProperty("登录id")
+    @TableField("loginid")
+    private String loginid;
+
     @ApiModelProperty("单位名称")
     @TableField("unitname")
     private String unitname;

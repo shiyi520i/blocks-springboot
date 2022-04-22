@@ -60,4 +60,8 @@ public class Record implements Serializable {
     @TableField(exist = false)
     private String companyName;
 
+    @ApiModelProperty("用户姓名")
+    @TableField(exist = false)
+    private String userName;
+
 }

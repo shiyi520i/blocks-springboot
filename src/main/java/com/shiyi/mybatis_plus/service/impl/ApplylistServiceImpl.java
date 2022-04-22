@@ -39,10 +39,12 @@ public class ApplylistServiceImpl extends ServiceImpl<ApplylistMapper, Applylist
         return fileService.cosUpload(file, Route.APPLY);
     }
 
-    public Mono<Page<Applylist>> getAll(Integer pageNo, Integer pageSize,Integer type) {
+    public Mono<Page<Applylist>> getAll(Integer pageNo, Integer pageSize, Integer type) {
+        QueryWrapper<Applylist> a = new QueryWrapper<>();
+        if (type != 4)
+            a.eq("type", type);
         return Mono.just(applylistService.page(
-                new Page<Applylist>().setCurrent(pageNo).setSize(pageSize),
-                new QueryWrapper<Applylist>().eq("type",type)));
+                new Page<Applylist>().setCurrent(pageNo).setSize(pageSize), a));
     }
 
     public Mono<Applylist> getByApplyId(Integer id) {

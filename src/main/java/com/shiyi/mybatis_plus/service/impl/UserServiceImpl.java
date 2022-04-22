@@ -3,6 +3,7 @@ package com.shiyi.mybatis_plus.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.mybatis_plus.pojo.User;
 import com.shiyi.mybatis_plus.mapper.UserMapper;
+import com.shiyi.mybatis_plus.pojo.Userrole;
 import com.shiyi.mybatis_plus.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     UserMapper userMapper;
     @Autowired
     UserServiceImpl userService;
+    @Autowired
+    private UserroleServiceImpl userroleService;
 
     public Mono<ServerResponse> getAllUsers(ServerRequest serverRequest) {
         return ok().contentType(APPLICATION_JSON)
@@ -44,8 +47,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Mono<ServerResponse> addUser(ServerRequest serverRequest) {
         return ok().contentType(APPLICATION_JSON)
                 .body(serverRequest.bodyToMono(User.class).flatMap(x -> {
-                    userService.getOneByLoginId(x.getLoginId())
-                            .switchIfEmpty(Mono.just(userService.saveOrUpdate(x)));
+                    userService.saveOrUpdate(x);
+                    userroleService.save(new Userrole().setLoginId(x.getLoginId()).setType(2));
                     return Mono.empty();
                 }), User.class);
     }
@@ -72,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 .body(Mono.just(userMapper.selectById(serverRequest.pathVariable("id"))), User.class);
     }
 
-    public Mono<User> handleUser(String id){
+    public Mono<User> handleUser(String id) {
         User user = userMapper.selectById(id);
         return Mono.empty();
     }
