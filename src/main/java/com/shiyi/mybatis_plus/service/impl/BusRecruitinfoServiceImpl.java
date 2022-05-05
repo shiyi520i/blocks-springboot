@@ -62,14 +62,14 @@ public class BusRecruitinfoServiceImpl extends ServiceImpl<BusRecruitinfoMapper,
     }
 
     @Override
-    public IPage<BusRecruitinfo> selectPage(String keyword, Integer pageNo, Integer pageSize, Integer species, String worktype, String salary, String jobtype) {
+    public IPage<BusRecruitinfo> selectPage(String keyword, Integer pageNo, Integer pageSize, Integer species, String worktype, String salary, String jobtype,String province) {
         Integer w = 0;
         if ("兼职".equals(worktype)) w = 1;
         List<Integer> s = SUtil.sToM(salary);
         Page<BusRecruitinfo> page = new Page<>();
         page.setCurrent(pageNo).setSize(pageSize);
         QueryWrapper<BusRecruitinfo> q = new QueryWrapper<>();
-        q.like("r_post", keyword).like("r_ztype", jobtype).ge("r_minsalary", s.get(0)).le("r_maxsalary", s.get(1)).eq("r_worktype", w).eq("r_jexperience", species);
+        q.like("r_post", keyword).like("r_ztype", jobtype).ge("r_minsalary", s.get(0)).le("r_maxsalary", s.get(1)).eq("r_worktype", w).eq("r_jexperience", species).eq("r_province",province);
         Page<BusRecruitinfo> b = busRecruitinfoService.selectPageRec(page, q);
         b.getRecords().stream().map(x -> {
 

@@ -1,6 +1,8 @@
 package com.shiyi.mybatis_plus.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.shiyi.mybatis_plus.Utils.Route;
+import com.shiyi.mybatis_plus.pojo.Companyinfo;
 import com.shiyi.mybatis_plus.pojo.User;
 import com.shiyi.mybatis_plus.mapper.UserMapper;
 import com.shiyi.mybatis_plus.pojo.Userrole;
@@ -12,6 +14,10 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
@@ -36,6 +42,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     UserServiceImpl userService;
     @Autowired
     private UserroleServiceImpl userroleService;
+    @Autowired
+    private CompanyinfoServiceImpl companyinfoService;
 
     public Mono<ServerResponse> getAllUsers(ServerRequest serverRequest) {
         return ok().contentType(APPLICATION_JSON)
@@ -75,8 +83,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 .body(Mono.just(userMapper.selectById(serverRequest.pathVariable("id"))), User.class);
     }
 
-    public Mono<User> handleUser(String id) {
-        User user = userMapper.selectById(id);
-        return Mono.empty();
+    public Mono<ServerResponse> getUserAvatar(ServerRequest serverRequest) {
+        List<String> list = new ArrayList<>();
+        if (parseInt(serverRequest.queryParam("roleType").get()) == 2) {
+            User id = userMapper.selectById(serverRequest.pathVariable("id"));
+            list.add(id.getAvatar());
+            list.add(id.getUsername());
+
+        } else {
+            Companyinfo id = companyinfoService.getLogoAndName(serverRequest.pathVariable("id"));
+            list.add(id.getLogo());
+            list.add(id.getCompanyname());
+
+        }
+        return ok().contentType(APPLICATION_JSON)
+                .body(Mono.just(list), User.class);
     }
+
 }

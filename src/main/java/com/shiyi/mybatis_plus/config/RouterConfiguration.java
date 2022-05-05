@@ -24,6 +24,7 @@ public class RouterConfiguration {
                         .andRoute(RequestPredicates.GET("/getUser/{id}"), userService::getUser)
                         .andRoute(RequestPredicates.POST("/updatauser/{id}"), userService::updataUser)
                         .andRoute(RequestPredicates.POST("/adduser"), userService::addUser)
+                        .andRoute(RequestPredicates.GET("/getUserAvatar/{id}"), userService::getUserAvatar)
                         .andRoute(RequestPredicates.DELETE("/delete/{id}"), userService::deleteUser));
     }
 

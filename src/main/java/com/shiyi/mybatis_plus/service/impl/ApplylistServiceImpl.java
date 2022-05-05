@@ -3,8 +3,10 @@ package com.shiyi.mybatis_plus.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.shiyi.mybatis_plus.Utils.Route;
+import com.shiyi.mybatis_plus.common.Result;
 import com.shiyi.mybatis_plus.pojo.Applylist;
 import com.shiyi.mybatis_plus.mapper.ApplylistMapper;
+import com.shiyi.mybatis_plus.pojo.Userrole;
 import com.shiyi.mybatis_plus.service.IApplylistService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.SneakyThrows;
@@ -26,6 +28,8 @@ public class ApplylistServiceImpl extends ServiceImpl<ApplylistMapper, Applylist
 
     @Autowired
     private ApplylistServiceImpl applylistService;
+    @Autowired
+    private UserroleServiceImpl userroleService;
 
     @Autowired
     private FileService fileService;
@@ -49,5 +53,14 @@ public class ApplylistServiceImpl extends ServiceImpl<ApplylistMapper, Applylist
 
     public Mono<Applylist> getByApplyId(Integer id) {
         return Mono.just(applylistService.getById(id));
+    }
+
+    public Mono<Result> passApplyId(Integer id) {
+        Applylist apply= applylistService.getById(id);
+        userroleService.save(new Userrole().setLoginId(apply.getLoginid()).setType(1));
+       if( applylistService.save(new Applylist().setType(2).setId(id))){
+           return Mono.just(new Result<>().setCode(200));
+       }else
+           return Mono.just(new Result<>().setCode(400).setMsg("失败"));
     }
 }

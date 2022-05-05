@@ -2,6 +2,7 @@ package com.shiyi.mybatis_plus.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.shiyi.mybatis_plus.common.Result;
 import com.shiyi.mybatis_plus.pojo.Applylist;
 import com.shiyi.mybatis_plus.service.impl.ApplylistServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +44,21 @@ public class ApplylistController {
     }
 
     @RequestMapping(value = "getone", method = RequestMethod.GET)
-    public void getByApplyId(@RequestParam("id") Integer id) {
-        applylistService.getByApplyId(id);
+    public Mono<Applylist> getByApplyId(@RequestParam("id") Integer id) {
+        return applylistService.getByApplyId(id);
     }
 
-    @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public void remove(@RequestParam("id") Integer id) {
-        applylistService.removeById(id);
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public boolean remove(@RequestBody Applylist applylist) {
+        return applylistService.removeById(applylist.getId());
     }
+
+
+    @RequestMapping(value = "pass", method = RequestMethod.POST)
+    public Mono<Result> passApplyId(@RequestBody Applylist applylist) {
+        return applylistService.passApplyId(applylist.getId());
+    }
+
 
 }
 

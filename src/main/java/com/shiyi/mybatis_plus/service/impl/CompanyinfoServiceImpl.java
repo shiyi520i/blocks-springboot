@@ -6,11 +6,8 @@ import com.shiyi.mybatis_plus.mapper.CompanyinfoMapper;
 import com.shiyi.mybatis_plus.pojo.Weight;
 import com.shiyi.mybatis_plus.service.ICompanyinfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static java.lang.Long.parseLong;
 
@@ -52,6 +49,11 @@ public class CompanyinfoServiceImpl extends ServiceImpl<CompanyinfoMapper, Compa
 
     public Page<Companyinfo> getAllCom(Integer pageNo, Integer pageSize) {
         return companyinfoService.page(new Page<Companyinfo>().setCurrent(pageNo).setSize(pageSize));
+    }
+
+    public Companyinfo getLogoAndName(String id){
+        return companyinfoMapper.getLogoAndCompanyname(id);
+
     }
 
 }

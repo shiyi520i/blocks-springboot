@@ -4,15 +4,15 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.shiyi.mybatis_plus.pojo.Companyinfo">
-        <result column="companyname" property="companyname" />
-        <result column="type" property="type" />
-        <result column="number" property="number" />
-        <result column="landline" property="landline" />
-        <result column="email" property="email" />
-        <result column="province" property="province" />
-        <result column="city" property="city" />
-        <result column="area" property="area" />
-        <result column="address" property="address" />
+        <result column="companyname" property="companyname"/>
+        <result column="type" property="type"/>
+        <result column="number" property="number"/>
+        <result column="landline" property="landline"/>
+        <result column="email" property="email"/>
+        <result column="province" property="province"/>
+        <result column="city" property="city"/>
+        <result column="area" property="area"/>
+        <result column="address" property="address"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -41,5 +41,11 @@
         where
         login_id = #{loginId,jdbcType=VARCHAR}
     </select>
+    <select id="getLogoAndCompanyname" resultMap="BaseResultMap">
+        select logo, companyname
+        from t_bus_companyinfo
+        where login_id = #{loginId,jdbcType=VARCHAR}
+    </select>
+
 
 </mapper>

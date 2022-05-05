@@ -47,9 +47,10 @@ public class BusRecruitinfoController {
                                          @RequestParam("species") Integer species,
                                          @RequestParam("worktype") String worktype,
                                          @RequestParam("salary") String salary,
-                                         @RequestParam("jobtype") String jobtype
+                                         @RequestParam("jobtype") String jobtype,
+                                         @RequestParam(value = "province",required = false) String province
     ) {
-        return busRecruitinfoService.selectPage(keyword, pageNo, pageSize, species, worktype, salary, jobtype);
+        return busRecruitinfoService.selectPage(keyword, pageNo, pageSize, species, worktype, salary, jobtype,province);
     }
 
 

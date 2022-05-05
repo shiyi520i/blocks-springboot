@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -18,6 +19,7 @@ import lombok.Setter;
  * @author ShiYi
  * @since 2022-04-08
  */
+@Accessors(chain = true)
 @Getter
 @Setter
 @TableName("t_bus_applylist")

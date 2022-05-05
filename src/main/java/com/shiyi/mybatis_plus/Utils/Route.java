@@ -21,5 +21,9 @@ public enum Route {
     /**
      * 职位申请
      */
-    APPLY
+    APPLY,
+    /**
+     * logo
+     */
+    LOGO
 }

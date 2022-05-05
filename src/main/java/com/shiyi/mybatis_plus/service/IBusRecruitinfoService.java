@@ -20,7 +20,7 @@ import java.util.List;
 public interface IBusRecruitinfoService extends IService<BusRecruitinfo> {
 
 
-    IPage<BusRecruitinfo> selectPage(String keyword,Integer pageNo,Integer pageSize,Integer species,String worktype,String salary,String jobtype);
+    IPage<BusRecruitinfo> selectPage(String keyword,Integer pageNo,Integer pageSize,Integer species,String worktype,String salary,String jobtype,String province);
 
     Page<BusRecruitinfo> selectPageRec(Page page, QueryWrapper q);
 
