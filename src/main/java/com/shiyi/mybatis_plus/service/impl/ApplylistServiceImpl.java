@@ -35,7 +35,8 @@ public class ApplylistServiceImpl extends ServiceImpl<ApplylistMapper, Applylist
     private FileService fileService;
 
     public Mono<Boolean> saveApply(Applylist applylist) {
-        return Mono.just(applylistService.save(applylist));
+        applylist.setType(0);
+        return Mono.just(applylistService.saveOrUpdate(applylist));
     }
 
     @SneakyThrows
@@ -57,8 +58,8 @@ public class ApplylistServiceImpl extends ServiceImpl<ApplylistMapper, Applylist
 
     public Mono<Result> passApplyId(Integer id) {
         Applylist apply= applylistService.getById(id);
-        userroleService.save(new Userrole().setLoginId(apply.getLoginid()).setType(1));
-       if( applylistService.save(new Applylist().setType(2).setId(id))){
+        userroleService.saveOrUpdate(new Userrole().setLoginId(apply.getLoginid()).setType(1));
+       if( applylistService.saveOrUpdate(new Applylist().setType(2).setId(id))){
            return Mono.just(new Result<>().setCode(200));
        }else
            return Mono.just(new Result<>().setCode(400).setMsg("失败"));

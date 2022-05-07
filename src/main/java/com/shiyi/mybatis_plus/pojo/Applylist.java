@@ -1,5 +1,6 @@
 package com.shiyi.mybatis_plus.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -29,7 +30,7 @@ public class Applylist implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("营业执照号码")
-    @TableId("id")
+    @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty("登录id")

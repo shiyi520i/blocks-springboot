@@ -24,7 +24,7 @@ public class UserroleController {
     private UserroleServiceImpl userroleService;
 
     @RequestMapping(value = "/getRole",method = RequestMethod.GET)
-    public Integer getRole(@RequestParam String id){
+    public Integer getRole(@RequestParam("loginId") String id){
        return userroleService.getById(id).getType();
     }
 
