@@ -6,6 +6,7 @@ import com.shiyi.mybatis_plus.Utils.Route;
 import com.shiyi.mybatis_plus.common.Result;
 import com.shiyi.mybatis_plus.pojo.Applylist;
 import com.shiyi.mybatis_plus.mapper.ApplylistMapper;
+import com.shiyi.mybatis_plus.pojo.Companyinfo;
 import com.shiyi.mybatis_plus.pojo.Userrole;
 import com.shiyi.mybatis_plus.service.IApplylistService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -30,6 +31,8 @@ public class ApplylistServiceImpl extends ServiceImpl<ApplylistMapper, Applylist
     private ApplylistServiceImpl applylistService;
     @Autowired
     private UserroleServiceImpl userroleService;
+    @Autowired
+    private CompanyinfoServiceImpl companyinfoService;
 
     @Autowired
     private FileService fileService;
@@ -59,6 +62,9 @@ public class ApplylistServiceImpl extends ServiceImpl<ApplylistMapper, Applylist
     public Mono<Result> passApplyId(Integer id) {
         Applylist apply= applylistService.getById(id);
         userroleService.saveOrUpdate(new Userrole().setLoginId(apply.getLoginid()).setType(1));
+        companyinfoService.save(new Companyinfo()
+                .setLoginId(apply.getLoginid())
+                .setCompanyname(apply.getUnitname()));
        if( applylistService.saveOrUpdate(new Applylist().setType(2).setId(id))){
            return Mono.just(new Result<>().setCode(200));
        }else

@@ -43,5 +43,14 @@ public class CompanyinfoController {
         return Mono.just(companyinfoService.getAllCom(pageNo,pageSize));
     }
 
+    @RequestMapping(value = "/saveCompany", method = RequestMethod.POST)
+    public boolean saveCompany(@RequestBody Companyinfo companyinfo) {
+        return companyinfoService.save(companyinfo);
+    }
+
+    @RequestMapping(value = "/getCompany", method = RequestMethod.GET)
+    public Companyinfo getCompany(@RequestParam("loginId") String loginId) {
+        return companyinfoService.getById(loginId);
+    }
 }
 

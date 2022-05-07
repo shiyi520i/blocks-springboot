@@ -1,6 +1,7 @@
 package com.shiyi.mybatis_plus.service.impl;
 
 import cn.authing.core.mgmt.ManagementClient;
+import cn.authing.core.types.FindUserParam;
 import cn.authing.core.types.UpdateUserInput;
 import cn.authing.core.types.User;
 import com.shiyi.mybatis_plus.common.PasswordFrom;
@@ -26,6 +27,8 @@ public class CommonServiceImpl {
         ManagementClient managementClient = new ManagementClient("6225994033dc7822bc36710f", "3a04ac71dccce0cadc30fb67e18230ce");
         // 获取管理员权限
         managementClient.requestToken().execute();
+        User user = managementClient.users().find(new FindUserParam().withExternalId(passwordFrom.getLoginId())).execute();
+
         User result = managementClient.users()
                 .update(passwordFrom.getLoginId(), new UpdateUserInput().withPassword(passwordFrom.getPassword()))
                 .execute();

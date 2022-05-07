@@ -48,11 +48,16 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         return result;
     }
 
-    public Mono<Page<Record>> getRecordsPage(Integer pageNo, Integer pageSize, String uid, Integer type) {
-        Page<Record> page = recordService.page(new Page<Record>().setCurrent(pageNo).setSize(pageSize),
-                new QueryWrapper<Record>().eq("uid", uid).eq("type", type));
+    public Mono<Page<Record>> getRecordsPage(Integer pageNo, Integer pageSize, String uid, Integer type,String cid) {
+
+        QueryWrapper<Record> query = new QueryWrapper<Record>().eq("type", type);
+        if(uid!=null)
+            query.eq("uid", uid);
+        if(cid!=null)
+            query.eq("cid", cid);
+        Page<Record> page = recordService.page(new Page<Record>().setCurrent(pageNo).setSize(pageSize),query);
         page.getRecords().stream().map(x -> {
-            x.setCompanyName(companyinfoService.getComOne(x.getCid()).getCompanyname());
+            x.setCompanyName(companyinfoService.getById(x.getCid()).getCompanyname());
             x.setPost(busRecruitinfoService.postOne(x.getRid()).getRPost());
             x.setUserName(userService.getById(x.getUid()).getUsername());
             return x;

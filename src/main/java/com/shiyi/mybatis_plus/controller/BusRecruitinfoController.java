@@ -98,8 +98,9 @@ public class BusRecruitinfoController {
     public IPage<BusRecruitinfo> getPageSim(@RequestParam(value = "keyword", required = false) String keyword,
                                             @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
                                             @RequestParam("pageSize") Integer pageSize,
+                                            @RequestParam(value = "uid",required = false) String uid,
                                             @RequestParam(value = "cn", required = false) String companyName) {
-        return busRecruitinfoService.selectPageSim(keyword, pageNo, pageSize, companyName);
+        return busRecruitinfoService.selectPageSim(keyword, pageNo, pageSize, companyName,uid);
     }
 
     /**

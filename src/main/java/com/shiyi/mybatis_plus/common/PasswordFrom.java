@@ -11,5 +11,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PasswordFrom {
     private String loginId;
+    private String originalPassword;
     private String password;
 }
